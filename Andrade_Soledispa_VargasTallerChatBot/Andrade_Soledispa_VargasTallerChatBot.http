@@ -1,0 +1,6 @@
+@Andrade_Soledispa_VargasTallerChatBot_HostAddress = http://localhost:5262
+
+GET {{Andrade_Soledispa_VargasTallerChatBot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
