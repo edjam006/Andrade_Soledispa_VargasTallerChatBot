@@ -10,7 +10,13 @@ h1 {
     margin-bottom: 2rem;
 }
 
-
+.tarjetas-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    max-width: 1200px;
+    flex-wrap: wrap;
+}
 
 .chat-container {
     display: flex;
