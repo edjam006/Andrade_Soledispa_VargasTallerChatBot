@@ -10,8 +10,9 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Repositories
     public class ChatBotService : IChatBotService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _chatGptApiKey;
-        private readonly string _geminiApiKey;
+        private readonly string? _chatGptApiKey;
+        private readonly string? _geminiApiKey;
+
 
         // Constructor que recibe la configuración appsettings para extraer las API Keys
         public ChatBotService(IConfiguration configuration)
@@ -19,9 +20,11 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Repositories
             _httpClient = new HttpClient();
             _chatGptApiKey = configuration["Apis:ChatGptApiKey"];
             _geminiApiKey = configuration["Apis:GeminiApiKey"];
+               
+
         }
 
-       
+
         public async Task<string> ObtenerRespuestaDeChatGPT(string pregunta)
         {
             // Formato JSON requerido por OpenAI, esto nos ayudo chat gpt ya que queriamos hacer un chatbot real, donde se envien los textos mediante json, y esta fue la solucion que nos dio gpt usar JSON
@@ -44,14 +47,25 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Repositories
             var response = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content);
             var result = await response.Content.ReadAsStringAsync();
 
+
+
             // Procesamos el JSON de la respuesta para extraer solo el contenido
             using var doc = JsonDocument.Parse(result);
-            return doc.RootElement
-                      .GetProperty("choices")[0]
-                      .GetProperty("message")
-                      .GetProperty("content")
-                      .GetString();
+
+            if (doc.RootElement.TryGetProperty("choices", out var choices) &&
+                choices.GetArrayLength() > 0 &&
+                choices[0].TryGetProperty("message", out var message) &&
+                message.TryGetProperty("content", out var contentJson))
+            {
+                return contentJson.GetString() ?? "Sin respuesta de contenido.";
+            }
+
+            return result;
+
+
+
         }
+
 
 
         public async Task<string> ObtenerRespuestaDeGemini(string pregunta)
@@ -60,28 +74,41 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Repositories
             var requestBody = new
             {
                 contents = new[] {
-                    new {
-                        parts = new[] {
-                            new { text = pregunta }
-                        }
-                    }
+            new {
+                parts = new[] {
+                    new { text = pregunta }
                 }
+            }
+        }
             };
 
             var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _geminiApiKey);
 
-            var response = await _httpClient.PostAsync("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + _geminiApiKey, content);
+            _httpClient.DefaultRequestHeaders.Clear(); // Limpia headers
+                                                       // ❌ No agregues Authorization con Bearer
+                                                       // _httpClient.DefaultRequestHeaders.Authorization = ...
+
+            var response = await _httpClient.PostAsync("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + _geminiApiKey, content);
+
             var result = await response.Content.ReadAsStringAsync();
 
+            // Para debug:
+            // return result;
+
             using var doc = JsonDocument.Parse(result);
-            return doc.RootElement
-                      .GetProperty("candidates")[0]
-                      .GetProperty("content")
-                      .GetProperty("parts")[0]
-                      .GetProperty("text")
-                      .GetString();
+            if (doc.RootElement.TryGetProperty("candidates", out var candidates) &&
+                candidates.GetArrayLength() > 0 &&
+                candidates[0].TryGetProperty("content", out var contentJson) &&
+                contentJson.TryGetProperty("parts", out var parts) &&
+                parts.GetArrayLength() > 0 &&
+                parts[0].TryGetProperty("text", out var textJson))
+            {
+                return textJson.GetString() ?? "Respuesta vacía de Gemini.";
+            }
+
+            return result;
+
         }
+
     }
 }

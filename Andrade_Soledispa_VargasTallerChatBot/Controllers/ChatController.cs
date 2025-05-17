@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Andrade_Soledispa_VargasTallerChatBot.Interfaces;
+using Andrade_Soledispa_VargasTallerChatBot.Repositories;
 
 namespace Andrade_Soledispa_VargasTallerChatBot.Controllers
 {
@@ -8,11 +9,14 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IChatBotService _chatBotService;
+        private readonly IRespuestaRepository _respuestaRepository;
+
 
         // Inyectamos el servicio que se conecta con Gemini y ChatGPT
-        public ChatController(IChatBotService chatBotService)
+        public ChatController(IChatBotService chatBotService, IRespuestaRepository respuestaRepository)
         {
             _chatBotService = chatBotService;
+            _respuestaRepository = respuestaRepository;
         }
 
         [HttpPost("preguntar")]
@@ -41,9 +45,17 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Controllers
             // Devolvemos la respuesta como un objeto JSON
             return Ok(new { respuesta });
         }
+
+        [HttpGet("historial")]
+        public async Task<IActionResult> ObtenerHistorial()
+        {
+            var historial = await _respuestaRepository.ObtenerHistorialAsync();
+            return Ok(historial);
+        }
+
     }
 
-    
+
     public class PreguntaRequest
     {
         public string Pregunta { get; set; }    
