@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatBot Comparativo</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>ChatGPT - Gemini</h1>
+    <div class="chat-container">
+        <div class="chat-box" id="chatgpt-box">
+            <h2>ChatGPT</h2>
+            <div class="messages" id="chatgpt-messages"></div>
+            <input type="text" id="chatgpt-input" placeholder="Pregunta para ChatGPT..." />
+            <button onclick="sendMessage('chatgpt')">Enviar</button>
+        </div>
+
+        <div class="chat-box" id="gemini-box">
+            <h2>Gemini</h2>
+            <div class="messages" id="gemini-messages"></div>
+            <input type="text" id="gemini-input" placeholder="Pregunta para Gemini..." />
+            <button onclick="sendMessage('gemini')">Enviar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

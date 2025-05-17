@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Andrade_Soledispa_VargasTallerChatBot.Interfaces;
 using Andrade_Soledispa_VargasTallerChatBot.Repositories;
+using Andrade_Soledispa_VargasTallerChatBot.Models;
 
 namespace Andrade_Soledispa_VargasTallerChatBot.Controllers
 {
@@ -42,16 +43,23 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Controllers
                 return BadRequest("Proveedor no válido. Usa 'chatgpt' o 'gemini'.");
             }
 
+            var registro = new RespuestaIA
+            {
+                Respuesta = respuesta,
+                Fecha = DateTime.Now,
+                Proveedor = request.Proveedor,
+                GuardadoPor = "Eduardo" 
+            };
+
+            await _respuestaRepository.GuardarRespuestaAsync(registro);
+
             // Devolvemos la respuesta como un objeto JSON
             return Ok(new { respuesta });
+
+
         }
 
-        [HttpGet("historial")]
-        public async Task<IActionResult> ObtenerHistorial()
-        {
-            var historial = await _respuestaRepository.ObtenerHistorialAsync();
-            return Ok(historial);
-        }
+       
 
     }
 
