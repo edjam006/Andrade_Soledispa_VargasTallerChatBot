@@ -18,6 +18,36 @@ h1 {
     flex-wrap: wrap;
 }
 
+.tarjeta {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    width: 300px;
+    margin: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.foto {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid orange;
+}
+
+.info h3 {
+    margin: 0 0 5px 0;
+    color: #f90;
+}
+
+.info p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
 .chat-container {
     display: flex;
     justify-content: space-around;
