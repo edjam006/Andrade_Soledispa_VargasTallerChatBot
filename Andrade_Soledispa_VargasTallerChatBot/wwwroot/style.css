@@ -14,6 +14,9 @@
 h1 {
     margin-bottom: 2rem;
 }
+h2 {
+    color: darkblue;
+}
 
 .tarjetas-container {
     display: flex;
@@ -26,12 +29,18 @@ h1 {
 .tarjeta {
     background: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 255, 0.9);
     width: 300px;
     margin: 15px;
     padding: 20px;
     display: flex;
     align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 255, 1.4);
 }
 
 .foto {
@@ -45,7 +54,7 @@ h1 {
 
 .info h3 {
     margin: 0 0 5px 0;
-    color: #f90;
+    color: darkblue;
 }
 
 .info p {
@@ -85,4 +94,10 @@ input[type="text"] {
 button {
     padding: 0.5rem 1rem;
     cursor: pointer;
+    color: darkblue;
+    border: 2px solid darkblue;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
 }
