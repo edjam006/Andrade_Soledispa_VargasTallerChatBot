@@ -30,9 +30,9 @@ namespace Andrade_Soledispa_VargasTallerChatBot.Controllers
             string respuesta;
 
             // Le enviamos la pregunta al proveedor necesario mediante condicionales 
-            if (request.Proveedor.ToLower() == "chatgpt")
+            if (request.Proveedor.ToLower() == "groq")
             {
-                respuesta = await _chatBotService.ObtenerRespuestaDeChatGPT(request.Pregunta);
+                respuesta = await _chatBotService.ObtenerRespuestaDeGroq(request.Pregunta);
             }
             else if (request.Proveedor.ToLower() == "gemini")
             {

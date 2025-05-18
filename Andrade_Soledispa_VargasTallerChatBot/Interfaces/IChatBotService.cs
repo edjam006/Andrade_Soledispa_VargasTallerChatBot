@@ -3,6 +3,7 @@
     public interface IChatBotService
     {
         Task<string> ObtenerRespuestaDeGemini(string pregunta);
-        Task<string> ObtenerRespuestaDeChatGPT(string pregunta);
+        Task<string> ObtenerRespuestaDeGroq(string pregunta);
+
     }
 }
