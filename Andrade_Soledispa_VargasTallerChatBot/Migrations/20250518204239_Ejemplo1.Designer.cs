@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Andrade_Soledispa_VargasTallerChatBot.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250516020958_tablaRespuesta")]
-    partial class tablaRespuesta
+    [Migration("20250518204239_Ejemplo1")]
+    partial class Ejemplo1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Andrade_Soledispa_VargasTallerChatBot.Migrations
 {
     /// <inheritdoc />
-    public partial class tablaRespuesta : Migration
+    public partial class Ejemplo1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

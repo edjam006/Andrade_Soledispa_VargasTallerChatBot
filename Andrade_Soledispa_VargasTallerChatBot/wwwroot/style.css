@@ -13,6 +13,8 @@
 
 h1 {
     margin-bottom: 2rem;
+    color: aliceblue;
+    font-style:italic;
 }
 h2 {
     color: darkblue;
@@ -74,6 +76,7 @@ h2 {
     border-radius: 8px;
     width: 45%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid darkblue;
 }
 
 .messages {
@@ -89,6 +92,7 @@ input[type="text"] {
     width: 70%;
     padding: 0.5rem;
     margin-right: 0.5rem;
+    border: 2px solid darkblue;
 }
 
 button {
